@@ -13,6 +13,7 @@ services:
       HOSTNAME: 0.0.0.0
       PORT: 3000
       SECRET: f378b36359c5c12eed9c471d0076a9d8479b8783e1443fb7
+      OAUTH_CALLBACK: https://54154e1e.ngrok.io/oauth_callback
     ports:
       - 3000:3000
       - 9229:9229
