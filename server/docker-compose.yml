@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+  api: 
+    build: .
+    volumes:
+      - /usr/src/app/node_modules
+      - .:/usr/src/app
+    environment:
+      NODE_ENV: development
+      HOSTNAME: 0.0.0.0
+      PORT: 3000
+      SECRET: f378b36359c5c12eed9c471d0076a9d8479b8783e1443fb7
