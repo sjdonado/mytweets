@@ -1,7 +1,9 @@
 module.exports = {
   server: {
-    hostname: process.env.HOST,
+    hostname: process.env.HOSTNAME,
     port: process.env.PORT,
+    redisURL: process.env.REDIS_URL,
+    secret: process.env.SECRET,
   },
   oauth: {
     base: 'https://api.twitter.com/oauth/',
