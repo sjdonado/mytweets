@@ -1,15 +1,14 @@
 
-const { oauth } = require('../../config/index');
+const { twitterAPI } = require('../../config/index');
 const { oauthCustomRequest } = require('../../services/oauth');
 
 const oauthRequest = async (req, res, next) => {
   try {
-    req.session.tokens = null;
-    if (!req.session.tokens) {
+    if (!req.session.userId) {
       const response = await oauthCustomRequest({
-        url: `${oauth.base}/request_token`,
+        url: `${twitterAPI.base}/oauth/request_token`,
         method: 'POST',
-        data: { oauth_callback: oauth.callback },
+        data: { oauth_callback: twitterAPI.callback },
       });
 
       req.session.oauthToken = response.oauth_token;
@@ -18,7 +17,7 @@ const oauthRequest = async (req, res, next) => {
 
     res.json({
       data: {
-        url: `${oauth.base}/authenticate?oauth_token=${req.session.oauthToken}`,
+        url: `${twitterAPI.base}/oauth/authenticate?oauth_token=${req.session.oauthToken}`,
       },
     });
   } catch (err) {
@@ -37,7 +36,7 @@ const oauthCallback = async (req, res, next) => {
     }
 
     const response = await oauthCustomRequest({
-      url: `${oauth.base}/access_token`,
+      url: `${twitterAPI.base}/oauth/access_token`,
       method: 'POST',
       data: {
         oauth_token: req.query.oauth_token,
@@ -45,7 +44,7 @@ const oauthCallback = async (req, res, next) => {
       },
     });
 
-    req.session.tokens = {
+    req.session.token = {
       key: response.oauth_token,
       secret: response.oauth_token_secret,
     };
@@ -59,17 +58,8 @@ const oauthCallback = async (req, res, next) => {
   }
 };
 
-const connect = async (req, res, next) => {
-  res.json({
-    data: {
-      test: 'test',
-    },
-  });
-};
-
 
 module.exports = {
   oauthRequest,
   oauthCallback,
-  connect,
 };

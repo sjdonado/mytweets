@@ -5,8 +5,8 @@ module.exports = {
     redisURL: process.env.REDIS_URL,
     secret: process.env.SECRET,
   },
-  oauth: {
-    base: 'https://api.twitter.com/oauth',
+  twitterAPI: {
+    base: 'https://api.twitter.com',
     version: '1.0',
     callback: process.env.OAUTH_CALLBACK,
     consumerKey: process.env.OAUTH_CONSUMER_KEY,

@@ -1,13 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const session = require('express-session');
-const RedisStore = require('connect-redis')(session);
-
-const { server } = require('./config');
-const redisClient = require('./services/redisClient');
 
 const api = require('./v1');
+const session = require('./middlewares/session');
 
 const app = express();
 
@@ -16,20 +12,7 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-const sessionConfig = {
-  secret: server.secret,
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: 'auto' },
-  store: new RedisStore({ client: redisClient }),
-};
-
-if (process.env.NODE_ENV === 'production') {
-  Object.assign(sessionConfig, {
-  });
-}
-
-app.use(session(sessionConfig));
+app.use(session);
 
 app.use('/', api);
 

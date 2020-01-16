@@ -1,8 +1,6 @@
-const { Router } = require('express');
+const router = require('express').Router();
 
 const twitter = require('./twitter/routes');
-
-const router = Router();
 
 router.use('/', twitter);
 

@@ -2,13 +2,13 @@ const crypto = require('crypto');
 const OAuth = require('oauth-1.0a');
 const fetch = require('node-fetch');
 
-const { oauth } = require('../config');
+const { twitterAPI } = require('../config');
 
 const oauthHeaders = (data, token = null) => {
   const oauthObject = OAuth({
     consumer: {
-      key: oauth.consumerKey,
-      secret: oauth.consumerSecret,
+      key: twitterAPI.consumerKey,
+      secret: twitterAPI.consumerSecret,
     },
     signature_method: 'HMAC-SHA1',
     hash_function(baseString, key) {
