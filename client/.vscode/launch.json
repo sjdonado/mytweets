@@ -10,17 +10,6 @@
       "name": "Launch Chrome against localhost",
       "url": "http://localhost:4000",
       "webRoot": "${workspaceFolder}/client"
-    },
-    {
-      "name": "Docker: Attach to Node",
-      "type": "node",
-      "request": "attach",
-      "port": 9229,
-      "address": "localhost",
-      "localRoot": "${workspaceFolder}/server",
-      "remoteRoot": "/usr/src/app",
-      "protocol": "inspector",
-      "restart": true
     }
   ]
 }
