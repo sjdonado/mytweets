@@ -1,11 +1,11 @@
 
 const { twitterAPI } = require('../../config/index');
-const { oauthCustomRequest } = require('../../services/oauth');
+const { request } = require('../../services/oauth');
 
 const oauthRequest = async (req, res, next) => {
   try {
     if (!req.session.userId) {
-      const response = await oauthCustomRequest({
+      const response = await request({
         url: `${twitterAPI.base}/oauth/request_token`,
         method: 'POST',
         data: { oauth_callback: twitterAPI.callback },
@@ -35,7 +35,7 @@ const oauthCallback = async (req, res, next) => {
       next(new Error('oauth_token and auth_verifier are required'));
     }
 
-    const response = await oauthCustomRequest({
+    const response = await request({
       url: `${twitterAPI.base}/oauth/access_token`,
       method: 'POST',
       data: {
@@ -58,8 +58,32 @@ const oauthCallback = async (req, res, next) => {
   }
 };
 
+const disconnect = async (req, res, next) => {
+  try {
+    await request({
+      url: `${twitterAPI.base}/1.1/oauth/invalidate_token`,
+      method: 'POST',
+      data: {
+        oauth_token: req.session.oauthToken,
+      },
+    });
+
+    const { userId } = req.session.userId;
+
+    req.session.clear(() => {
+      res.json({
+        data: {
+          userId,
+        },
+      });
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports = {
   oauthRequest,
   oauthCallback,
+  disconnect,
 };

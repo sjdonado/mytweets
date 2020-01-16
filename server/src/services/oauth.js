@@ -4,6 +4,11 @@ const fetch = require('node-fetch');
 
 const { twitterAPI } = require('../config');
 
+/**
+ * Get Oauth 1.0a headers
+ * @param {Object} data
+ * @param {Object} token
+ */
 const oauthHeaders = (data, token = null) => {
   const oauthObject = OAuth({
     consumer: {
@@ -21,7 +26,12 @@ const oauthHeaders = (data, token = null) => {
   return oauthObject.toHeader(oauthObject.authorize(data, token));
 };
 
-const oauthCustomRequest = async (data, token) => {
+/**
+ * Oauth request wrapper
+ * @param {Object} data
+ * @param {Object} token
+ */
+const request = async (data, token) => {
   const headers = oauthHeaders(data, token);
 
   const response = await fetch(data.url, {
@@ -41,5 +51,5 @@ const oauthCustomRequest = async (data, token) => {
 
 module.exports = {
   oauthHeaders,
-  oauthCustomRequest,
+  request,
 };
