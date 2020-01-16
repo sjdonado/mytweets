@@ -6,7 +6,10 @@ module.exports = {
     secret: process.env.SECRET,
   },
   oauth: {
-    base: 'https://api.twitter.com/oauth/',
+    base: 'https://api.twitter.com/oauth',
+    version: '1.0',
     callback: process.env.OAUTH_CALLBACK,
+    consumerKey: process.env.OAUTH_CONSUMER_KEY,
+    consumerSecret: process.env.OAUTH_CONSUMER_SECRET,
   },
 };

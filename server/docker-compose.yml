@@ -14,6 +14,8 @@ services:
       PORT: 3000
       SECRET: f378b36359c5c12eed9c471d0076a9d8479b8783e1443fb7
       OAUTH_CALLBACK: https://54154e1e.ngrok.io/oauth_callback
+      OAUTH_CONSUMER_KEY: qSJSK4RrGuk7ApRDZfUw5v1ez
+      OAUTH_CONSUMER_SECRET: gyGdVQxQG61GCRzDBQUNue1AEMNgtE6JbEXanj93N98qu6zIAG
       REDIS_URL: redis://redis:6379
     ports:
       - 3000:3000

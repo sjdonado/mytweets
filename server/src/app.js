@@ -7,8 +7,7 @@ const RedisStore = require('connect-redis')(session);
 const { server } = require('./config');
 const redisClient = require('./services/redisClient');
 
-
-const apiV1 = require('./api/v1');
+const api = require('./v1');
 
 const app = express();
 
@@ -21,18 +20,18 @@ const sessionConfig = {
   secret: server.secret,
   resave: false,
   saveUninitialized: true,
+  cookie: { secure: 'auto' },
   store: new RedisStore({ client: redisClient }),
 };
 
 if (process.env.NODE_ENV === 'production') {
   Object.assign(sessionConfig, {
-    cookie: { secure: true },
   });
 }
 
 app.use(session(sessionConfig));
 
-app.use('/v1', apiV1);
+app.use('/', api);
 
 app.use((req, res) => {
   res.status(404);
