@@ -2,7 +2,7 @@ FROM node:erbium-alpine
 
 WORKDIR /usr/src/app
 
-EXPOSE 3000
+EXPOSE 4000
 EXPOSE 9229
 
 COPY ./package.json ./

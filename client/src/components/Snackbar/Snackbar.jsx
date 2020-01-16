@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
+import './Snackbar.scss';
+
 function Snackbar(props) {
   const { open, message } = props;
   const snackbarRef = useRef();

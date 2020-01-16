@@ -6,7 +6,7 @@ import { API_URL } from '../environment';
  * @param {Object} data
  * @param {'GET'|'POST'} method
  */
-async function request(endpoint, data, method = 'GET') {
+async function request(endpoint, data = null, method = 'GET') {
   const options = {
     method,
     headers: {
@@ -18,7 +18,12 @@ async function request(endpoint, data, method = 'GET') {
       body: JSON.stringify(data),
     });
   }
+
   const response = await fetch(`${API_URL}/${endpoint}`, options);
+
+  if (response.status !== 200) {
+    throw new Error(response.statusText);
+  }
 
   return response.json();
 }
