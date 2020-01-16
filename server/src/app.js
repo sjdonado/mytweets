@@ -33,7 +33,7 @@ app.use(session(sessionConfig));
 
 app.use('/', api);
 
-app.use((req, res) => {
+app.use((req, res, next) => {
   res.status(404);
   res.json({
     error: true,
@@ -41,7 +41,7 @@ app.use((req, res) => {
   });
 });
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   const {
     statusCode = 500, message,
   } = err;

@@ -1,25 +1,19 @@
-const fetch = require('node-fetch');
 
 const { oauth } = require('../../config/index');
-const { oauthHeaders, parseToObject } = require('../../services/oauth');
+const { oauthCustomRequest } = require('../../services/oauth');
 
 const oauthRequest = async (req, res, next) => {
   try {
-    if (!req.session.oauthToken) {
-      const data = {
+    req.session.tokens = null;
+    if (!req.session.tokens) {
+      const response = await oauthCustomRequest({
         url: `${oauth.base}/request_token`,
         method: 'POST',
         data: { oauth_callback: oauth.callback },
-      };
-
-      const response = await fetch(data.url, {
-        method: data.method,
-        headers: oauthHeaders(data),
       });
 
-      const responseObject = await parseToObject(response);
-      req.session.oauthToken = responseObject.oauth_token;
-      req.session.oauthTokenSecret = responseObject.oauth_token_secret;
+      req.session.oauthToken = response.oauth_token;
+      req.session.oauthTokenSecret = response.oauth_token_secret;
     }
 
     res.json({
@@ -32,6 +26,50 @@ const oauthRequest = async (req, res, next) => {
   }
 };
 
+const oauthCallback = async (req, res, next) => {
+  try {
+    if (!(req.query.oauth_token !== req.session.oauth_token)) {
+      next(new Error('oauth_token and auth_verifier are required'));
+    }
+
+    if (!(req.query.oauth_token && req.query.oauth_verifier)) {
+      next(new Error('oauth_token and auth_verifier are required'));
+    }
+
+    const response = await oauthCustomRequest({
+      url: `${oauth.base}/access_token`,
+      method: 'POST',
+      data: {
+        oauth_token: req.query.oauth_token,
+        oauth_verifier: req.query.oauth_verifier,
+      },
+    });
+
+    req.session.tokens = {
+      key: response.oauth_token,
+      secret: response.oauth_token_secret,
+    };
+    req.session.userId = response.user_id;
+
+    res.json({
+      data: 'OK',
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const connect = async (req, res, next) => {
+  res.json({
+    data: {
+      test: 'test',
+    },
+  });
+};
+
+
 module.exports = {
   oauthRequest,
+  oauthCallback,
+  connect,
 };
