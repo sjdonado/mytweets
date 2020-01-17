@@ -1,6 +1,7 @@
 # Mytweets
+> Connect to Twitter using OAuth1 to fetch 100 of my most recent tweets
 
-# Api routes
+## Api routes
 
 | Prefix Verb/header      | Roles                    | URI Pattern                      | Params
 | :-----------------------| :------------------------| :--------------------------------|:--------------------
@@ -10,7 +11,7 @@
 | POST                    | Authenticated user       | /api/disconnect                  | None
 
 
-# Development setup
+## Development setup
 
 * Go to server folder `cd server`
 * Create a Twitter app https://developer.twitter.com
@@ -26,15 +27,14 @@
     npm start
 ```
 
-# Production setup
+## Production setup
 
-## Server
+* Server
 ```
     docker build -t mytweets
     docker run -p 3000:3000 mytweets_container mytweets
 ```
-
-## Client
+* Client
 ```
    npm run build 
 ```
