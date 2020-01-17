@@ -1,5 +1,10 @@
 # Mytweets
-> Connect to Twitter using OAuth1 to fetch 100 of my most recent tweets
+> Fetch 100 of my most recent tweets using OAuth1.0
+<div align="center">
+  <a href="https://my-tweets.herokuapp.com">
+    <img src="/banner.jpg" alt="Mytweets" width="100%" />
+  </a>
+</div>
 
 ## Api routes
 
