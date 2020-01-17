@@ -6,6 +6,9 @@ module.exports = {
     secret: process.env.SECRET,
     redisURL: process.env.REDIS_URL,
   },
+  database: {
+    url: process.env.MONGO_URL,
+  },
   twitterAPI: {
     base: 'https://api.twitter.com',
     version: '1.0',

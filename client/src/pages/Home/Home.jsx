@@ -80,19 +80,19 @@ function Home() {
           <div className="user-container">
             <div className="cover">
               <img
-                src={userInfo.profile_banner_url}
+                src={userInfo.banner}
                 alt="User profile banner"
               />
             </div>
             <div className="header">
               <img
                 className="avatar"
-                src={userInfo.profile_image_url_https}
+                src={userInfo.avatar}
                 alt="User profile"
               />
               <div className="vertical-wrapper">
                 <h1>{userInfo.name}</h1>
-                <span className="screen-name">{`@${userInfo.screen_name}`}</span>
+                <span className="screen-name">{`@${userInfo.screenName}`}</span>
                 <span>{userInfo.description}</span>
                 <span>{userInfo.location}</span>
               </div>

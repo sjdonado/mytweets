@@ -7,6 +7,10 @@ const api = require('./v1');
 const session = require('./middlewares/session');
 const { server } = require('./config');
 
+const database = require('./services/database');
+
+database.connect();
+
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'static')));

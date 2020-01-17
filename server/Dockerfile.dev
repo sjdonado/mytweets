@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 EXPOSE 4000
 EXPOSE 9229
 
-COPY ./package.json ./
+COPY package.json .
 
 RUN npm install
 
