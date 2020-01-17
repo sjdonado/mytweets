@@ -52,7 +52,7 @@ const connect = async (req, res, next) => {
 const tweets = async (req, res, next) => {
   try {
     const response = await request(
-      `${twitterAPI.base}/1.1/statuses/user_timeline.json?count=100`,
+      `${twitterAPI.base}/1.1/statuses/user_timeline.json?include_rts=1&count=100`,
       req.session.token,
     );
 

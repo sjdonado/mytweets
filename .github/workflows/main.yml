@@ -1,0 +1,41 @@
+name: Build and Deploy
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Install Client Dependencies
+        working-directory: client
+        run: npm install
+      - name: Build Client
+        working-directory: client
+        run: |
+          npm run build
+          mv build ../server/src/static
+      - name: Login to Heroku
+        uses: sjdonado/heroku@master
+        with:
+          args: container:login
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      - name: Push
+        uses: sjdonado/heroku@master
+        with:
+          args: container:push -a $APP_NAME web
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          APP_NAME: my-tweets
+      - name: Release
+        uses: sjdonado/heroku@master
+        with:
+          args: container:release -a $APP_NAME web
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          APP_NAME: my-tweets
