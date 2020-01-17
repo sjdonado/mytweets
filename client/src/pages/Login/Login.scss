@@ -1,8 +1,10 @@
 @import '../../App.scss';
 
 .root {
-  flex-direction: column;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .title {
