@@ -18,11 +18,13 @@ services:
       OAUTH_CONSUMER_KEY:
       OAUTH_CONSUMER_SECRET:
       REDIS_URL: redis://redis:6379
+      MONGO_URL: mongodb://mytweets_user:root_12345@db:27017/mytweets
     ports:
       - 4000:4000
       - 9229:9229
     depends_on:
       - redis
+      - db
   redis:
     image: redis
     entrypoint: redis-server --appendonly yes
@@ -31,6 +33,18 @@ services:
     ports:
       - 6379:6379
     restart: always
+  db:
+    image: mongo
+    volumes:
+      - ./db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mytweets_user
+      MONGO_INITDB_ROOT_PASSWORD: root_12345
+      MONGO_INITDB_DATABASE: mytweets
+    ports:
+      - 27017:27017
 
 volumes:
   redis-data: ~
+  mongo-data: ~
