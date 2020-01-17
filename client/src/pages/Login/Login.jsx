@@ -31,6 +31,7 @@ function Login() {
       <Snackbar
         open={Boolean(snackbarMsg)}
         message={snackbarMsg}
+        onCompleted={() => setSnackbarMsg(null)}
       />
     </div>
   );

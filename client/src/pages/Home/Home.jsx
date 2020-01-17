@@ -20,31 +20,26 @@ function Home() {
 
   const [snackbarMsg, setSnackbarMsg] = useState('');
 
-  const fetchUserInfo = async () => {
+  const fetchTweets = async () => {
     setIsLoading(true);
     try {
-      const { data } = await request(CONNECT_ENDPOINT, 'POST');
-      console.log('userInfo', data);
-      setUserInfo(data);
+      const { data } = await request(TWEETS_ENDPOINT);
+      setTweets(data);
     } catch (err) {
-      if (err.statusCode === 401) {
-        window.location.replace('/login');
-      } else {
-        setSnackbarMsg(err.message);
-      }
+      setSnackbarMsg(err.message);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const fetchTweets = async () => {
+  const fetchUserInfo = async () => {
     setIsLoading(true);
     try {
-      const { data } = await request(TWEETS_ENDPOINT);
-      console.log('tweets', data);
-      setTweets(data);
+      const { data } = await request(CONNECT_ENDPOINT, 'POST');
+      setUserInfo(data);
+      await fetchTweets();
     } catch (err) {
-      setSnackbarMsg(err.message);
+      window.location.replace('/login');
     } finally {
       setIsLoading(false);
     }
@@ -74,7 +69,6 @@ function Home() {
   useEffect(() => {
     if (!userInfo) {
       fetchUserInfo();
-      fetchTweets();
     }
   }, [userInfo]);
 
@@ -147,6 +141,7 @@ function Home() {
       <Snackbar
         open={Boolean(snackbarMsg)}
         message={snackbarMsg}
+        onCompleted={() => setSnackbarMsg(null)}
       />
     </>
   );

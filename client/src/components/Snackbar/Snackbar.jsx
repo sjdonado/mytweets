@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './Snackbar.scss';
 
 function Snackbar(props) {
-  const { open, message } = props;
+  const { open, message, onCompleted } = props;
   const snackbarRef = useRef();
 
   useEffect(() => {
@@ -12,6 +12,7 @@ function Snackbar(props) {
       snackbarRef.current.className = 'show';
       setTimeout(() => {
         snackbarRef.current.className = snackbarRef.current.className.replace('show', '');
+        onCompleted();
       }, 3000);
     }
   });
@@ -29,6 +30,7 @@ function Snackbar(props) {
 Snackbar.propTypes = {
   open: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
+  onCompleted: PropTypes.func.isRequired,
 };
 
 export default Snackbar;
