@@ -24,7 +24,7 @@ function connect() {
   );
 
   mongoose.connection.on('open', () => {
-    logger.info(`${database.url} \x1b[32m%s\x1b[0m`, 'connected');
+    logger.info(`Database running at ${database.url}`);
   });
 }
 

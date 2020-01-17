@@ -9,5 +9,5 @@ const { port, hostname } = config.server;
 const server = http.createServer(app);
 
 server.listen(port, hostname, () => {
-  logger.info(`Running at http://${hostname}:${port}`);
+  logger.info(`Http app running at http://${hostname}:${port}`);
 });

@@ -122,7 +122,7 @@ function Home() {
               >
                 <img
                   className="avatar"
-                  src={userInfo.profile_image_url_https}
+                  src={tweet.user.profile_image_url_https}
                   alt="User profile"
                 />
                 <div className="vertical-wrapper">
@@ -141,7 +141,7 @@ function Home() {
       <Snackbar
         open={Boolean(snackbarMsg)}
         message={snackbarMsg}
-        onCompleted={() => setSnackbarMsg(null)}
+        onCompleted={() => setSnackbarMsg('')}
       />
     </>
   );

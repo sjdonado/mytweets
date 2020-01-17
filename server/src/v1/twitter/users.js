@@ -10,8 +10,6 @@ const connect = async (req, res, next) => {
       req.session.token,
     );
 
-    console.log('connect data =>', data);
-
     const params = {
       userId: data.id,
       name: data.name,
