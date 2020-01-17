@@ -7,7 +7,7 @@ module.exports = {
     redisURL: process.env.REDIS_URL,
   },
   database: {
-    url: process.env.MONGO_URL,
+    url: process.env.MONGODB_URI,
   },
   twitterAPI: {
     base: 'https://api.twitter.com',

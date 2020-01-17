@@ -14,11 +14,11 @@ services:
       PORT: 4000
       SECRET: f378b36359c5c12eed9c471d0076a9d8479b8783e1443fb7
       ORIGIN: http://localhost:3000
-      OAUTH_CALLBACK:
+      OAUTH_CALLBACK: http://localhost:4000/api/oauth_callback
       OAUTH_CONSUMER_KEY:
       OAUTH_CONSUMER_SECRET:
       REDIS_URL: redis://redis:6379
-      MONGO_URL: mongodb://mytweets_user:root_12345@db:27017/mytweets
+      MONGODB_URI: mongodb://mytweets_user:root_12345@db:27017/mytweets
     ports:
       - 4000:4000
       - 9229:9229
