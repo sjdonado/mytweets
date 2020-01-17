@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
-      - name: Install Client Dependencies
+      - name: Install Client dependencies
         working-directory: client
         run: npm install
       - name: Build Client
@@ -19,6 +19,12 @@ jobs:
         run: |
           npm run build
           mv build ../server/src/static
+      - name: Install Server dependencies
+          working-directory: server
+          run: npm install
+      - name: Run Server tests
+        working-directory: server
+        run: npm test
       - name: Login to Heroku
         uses: sjdonado/heroku@master
         with:

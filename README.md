@@ -23,23 +23,34 @@
 * Set `OAUTH_CALLBACK` `OAUTH_CONSUMER_KEY` `OAUTH_CONSUMER_SECRET` in docker-compose.yml
 * Run the server (debug mode) running on localhost:4000
 ```
-    docker-compose up --build
+  docker-compose up --build
 ```
 * Go to client folder `cd client`
 * Install dependencies `npm install`
 * Run the client running on localhost:3000
 ```
-    npm start
+  npm start
 ```
 
 ## Production setup
 
 * Server
 ```
-    docker build -t mytweets
-    docker run -p 3000:3000 mytweets_container mytweets
+  docker build -t mytweets
+  docker run -p 3000:3000 mytweets_container mytweets
 ```
 * Client
 ```
-   npm run build 
+  npm run build 
+```
+
+## Run tests
+
+* Server
+```
+  docker-compose run --rm api npm test
+```
+* Client
+```
+  npm test
 ```

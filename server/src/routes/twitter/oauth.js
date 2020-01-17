@@ -66,10 +66,12 @@ const disconnect = async (req, res, next) => {
       },
     }, req.session.token);
 
+    const { userId } = req.session;
+
     req.session.destroy(() => {
       res.json({
         data: {
-          userId: req.session.userId,
+          userId,
         },
       });
     });

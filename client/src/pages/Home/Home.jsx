@@ -67,10 +67,12 @@ function Home() {
   };
 
   useEffect(() => {
-    if (!userInfo) {
+    if (document.cookie.includes('connect.sid')) {
       fetchUserInfo();
+    } else {
+      window.location.replace('/login');
     }
-  }, [userInfo]);
+  }, []);
 
   return (
     <>

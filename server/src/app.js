@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const api = require('./v1');
+const routes = require('./routes');
 const session = require('./middlewares/session');
 const { server } = require('./config');
 
@@ -25,7 +25,7 @@ app.use(cors({
 
 app.use(session);
 
-app.use('/api', api);
+app.use('/api', routes);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'static/index.html'));
