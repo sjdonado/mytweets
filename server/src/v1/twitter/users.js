@@ -36,9 +36,6 @@ const request = async (url, token, method = 'GET') => {
 
 const connect = async (req, res, next) => {
   try {
-    if (!req.session.token) {
-      throw new Error('Session token not found');
-    }
     const response = await request(
       `${twitterAPI.base}/1.1/account/verify_credentials.json`,
       req.session.token,
@@ -54,11 +51,8 @@ const connect = async (req, res, next) => {
 
 const tweets = async (req, res, next) => {
   try {
-    if (!req.session.token) {
-      throw new Error('Session token not found');
-    }
     const response = await request(
-      `${twitterAPI.base}/1.1/statuses/home_timeline.json`,
+      `${twitterAPI.base}/1.1/statuses/user_timeline.json?count=100`,
       req.session.token,
     );
 

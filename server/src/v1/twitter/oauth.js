@@ -58,9 +58,6 @@ const oauthCallback = async (req, res, next) => {
 
 const disconnect = async (req, res, next) => {
   try {
-    if (!req.session.token) {
-      throw new Error('Session token not found');
-    }
     await request({
       url: `${twitterAPI.base}/1.1/oauth/invalidate_token`,
       method: 'POST',

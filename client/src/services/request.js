@@ -24,7 +24,9 @@ async function request(endpoint, method = 'GET', data = null) {
   const response = await fetch(`${API_URL}/${endpoint}`, options);
 
   if (response.status !== 200) {
-    throw new Error(response.statusText);
+    const error = new Error(response.statusText);
+    error.statusCode = response.status;
+    throw error;
   }
 
   return response.json();
