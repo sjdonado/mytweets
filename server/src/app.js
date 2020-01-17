@@ -4,13 +4,17 @@ const bodyParser = require('body-parser');
 
 const api = require('./v1');
 const session = require('./middlewares/session');
+const { server } = require('./config');
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(cors());
+app.use(cors({
+  origin: server.origin,
+  credentials: true,
+}));
 
 app.use(session);
 

@@ -2,8 +2,9 @@ module.exports = {
   server: {
     hostname: process.env.HOSTNAME,
     port: process.env.PORT,
-    redisURL: process.env.REDIS_URL,
+    origin: process.env.ORIGIN,
     secret: process.env.SECRET,
+    redisURL: process.env.REDIS_URL,
   },
   twitterAPI: {
     base: 'https://api.twitter.com',

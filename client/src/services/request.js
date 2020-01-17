@@ -3,16 +3,18 @@ import { API_URL } from '../environment';
 /**
  * Request to API wrapper
  * @param {String} endpoint
- * @param {Object} data
  * @param {'GET'|'POST'} method
+ * @param {Object} data
  */
-async function request(endpoint, data = null, method = 'GET') {
+async function request(endpoint, method = 'GET', data = null) {
   const options = {
     method,
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
   };
+
   if (data) {
     Object.assign(options, {
       body: JSON.stringify(data),

@@ -1,5 +1,5 @@
 
-const { twitterAPI } = require('../../config/index');
+const { twitterAPI, server } = require('../../config/index');
 const { request } = require('../../services/oauth');
 
 const oauthRequest = async (req, res, next) => {
@@ -50,9 +50,7 @@ const oauthCallback = async (req, res, next) => {
     };
     req.session.userId = response.user_id;
 
-    res.json({
-      data: 'OK',
-    });
+    res.redirect(server.origin);
   } catch (err) {
     next(err);
   }
@@ -60,17 +58,20 @@ const oauthCallback = async (req, res, next) => {
 
 const disconnect = async (req, res, next) => {
   try {
+    if (!req.session.token) {
+      throw new Error('Session token not found');
+    }
     await request({
       url: `${twitterAPI.base}/1.1/oauth/invalidate_token`,
       method: 'POST',
       data: {
-        oauth_token: req.session.oauthToken,
+        oauth_token: req.session.token.key,
       },
-    });
+    }, req.session.token);
 
     const { userId } = req.session.userId;
 
-    req.session.clear(() => {
+    req.session.destroy(() => {
       res.json({
         data: {
           userId,

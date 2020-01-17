@@ -12,10 +12,9 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await request(OAUTH_REQUEST_ENDPOINT);
-      console.log('response', response);
+      const { data } = await request(OAUTH_REQUEST_ENDPOINT);
+      window.location.replace(data.url);
     } catch (err) {
-      console.log('err', err);
       setSnackbarMsg(err.message);
     }
   };

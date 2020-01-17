@@ -10,18 +10,18 @@ const { oauthHeaders } = require('../../services/oauth');
  * @param {String} method
  * @returns {Object} response
  */
-const request = async (url, userId, token, method = 'GET') => {
+const request = async (url, token, method = 'GET') => {
   const data = {
     url,
     method,
     data: {
-      user_id: userId,
+      oauth_token: token.key,
     },
   };
 
   const headers = oauthHeaders(data, token);
 
-  const response = await fetch(data.url, {
+  const response = await fetch(url, {
     headers,
   });
 
@@ -36,9 +36,11 @@ const request = async (url, userId, token, method = 'GET') => {
 
 const connect = async (req, res, next) => {
   try {
+    if (!req.session.token) {
+      throw new Error('Session token not found');
+    }
     const response = await request(
-      `${twitterAPI.base}/1.1/users.show.json`,
-      req.session.userId,
+      `${twitterAPI.base}/1.1/account/verify_credentials.json`,
       req.session.token,
     );
 
@@ -52,9 +54,11 @@ const connect = async (req, res, next) => {
 
 const tweets = async (req, res, next) => {
   try {
+    if (!req.session.token) {
+      throw new Error('Session token not found');
+    }
     const response = await request(
       `${twitterAPI.base}/1.1/statuses/home_timeline.json`,
-      req.session.userId,
       req.session.token,
     );
 
