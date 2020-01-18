@@ -32,19 +32,6 @@ function Home() {
     }
   };
 
-  const fetchUserInfo = async () => {
-    setIsLoading(true);
-    try {
-      const { data } = await request(CONNECT_ENDPOINT, 'POST');
-      setUserInfo(data);
-      await fetchTweets();
-    } catch (err) {
-      window.location.replace('/login');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleRefreshTweets = async () => {
     try {
       await fetchTweets();
@@ -67,6 +54,19 @@ function Home() {
   };
 
   useEffect(() => {
+    const fetchUserInfo = async () => {
+      setIsLoading(true);
+      try {
+        const { data } = await request(CONNECT_ENDPOINT, 'POST');
+        setUserInfo(data);
+        await fetchTweets();
+      } catch (err) {
+        window.location.replace('/login');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     if (document.cookie.includes('connect.sid')) {
       fetchUserInfo();
     } else {

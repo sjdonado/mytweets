@@ -28,7 +28,7 @@ const oauthCallback = async (req, res, next) => {
       next(new Error('oauth_token and auth_verifier are required'));
     }
 
-    if (!(req.query.oauth_token !== req.session.oauthToken)) {
+    if (req.query.oauth_token !== req.session.oauthToken) {
       next(new Error('oauth_token must be equal to session oauthToken'));
     }
 
