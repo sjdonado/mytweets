@@ -4,16 +4,13 @@ const { request } = require('../../services/oauth');
 
 const oauthRequest = async (req, res, next) => {
   try {
-    if (!req.session.userId) {
-      const response = await request({
-        url: `${twitterAPI.base}/oauth/request_token`,
-        method: 'POST',
-        data: { oauth_callback: twitterAPI.callback },
-      });
+    const response = await request({
+      url: `${twitterAPI.base}/oauth/request_token`,
+      method: 'POST',
+      data: { oauth_callback: twitterAPI.callback },
+    });
 
-      req.session.oauthToken = response.oauth_token;
-      req.session.oauthTokenSecret = response.oauth_token_secret;
-    }
+    req.session.oauthToken = response.oauth_token;
 
     res.json({
       data: {
@@ -27,12 +24,12 @@ const oauthRequest = async (req, res, next) => {
 
 const oauthCallback = async (req, res, next) => {
   try {
-    if (!(req.query.oauth_token !== req.session.oauth_token)) {
+    if (!(req.query.oauth_token && req.query.oauth_verifier)) {
       next(new Error('oauth_token and auth_verifier are required'));
     }
 
-    if (!(req.query.oauth_token && req.query.oauth_verifier)) {
-      next(new Error('oauth_token and auth_verifier are required'));
+    if (!(req.query.oauth_token !== req.session.oauthToken)) {
+      next(new Error('oauth_token must be equal to session oauthToken'));
     }
 
     const response = await request({
@@ -48,6 +45,7 @@ const oauthCallback = async (req, res, next) => {
       key: response.oauth_token,
       secret: response.oauth_token_secret,
     };
+
     req.session.userId = response.user_id;
 
     res.redirect(server.origin);

@@ -20,7 +20,7 @@ function Login() {
   };
 
   return (
-    <div className="root container">
+    <div className="root">
       <h1 className="title">Welcome to Mytweets app</h1>
       <button
         type="button"

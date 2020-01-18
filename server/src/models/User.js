@@ -8,9 +8,10 @@ const fields = {
     unique: true,
     required: [true, 'UserId required'],
   },
+  name: String,
+  screenName: String,
   avatar: String,
   banner: String,
-  screenName: String,
   description: String,
   location: String,
 };
